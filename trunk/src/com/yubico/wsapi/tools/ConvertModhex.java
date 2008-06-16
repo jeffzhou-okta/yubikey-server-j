@@ -20,6 +20,9 @@ package com.yubico.wsapi.tools;
 import com.yubico.wsapi.Secret;
 import com.yubico.wsapi.Crypto;
 
+/** 
+ * Eg. java -cp ./out/wsapi.jar;./resources/base.jar;./resources/tsik.jar;./resources/log4j-1.2.13.jar com.yubico.wsapi.tools.ConvertModhex bnhtdkvrbfnbvrrurtvvrickdfvbuldtkububicktvuk
+ */
 public class ConvertModhex {
 	public static void main(String[] argv) throws Exception {
 		Secret s = Secret.fromModHex(argv[0]);
