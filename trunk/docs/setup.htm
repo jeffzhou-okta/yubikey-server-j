@@ -1,0 +1,76 @@
+<font face=arial>
+<center><h1>YubiKey Server Setup Guide</h1></center>
+
+<h3>System Requirements</h3>
+
+<ul>
+<li>Get a computer with at least 500MB RAM, 60MB of free disk space, and CPU >= 1GHz. 
+
+<p><li><a href=http://tomcat.apache.org/download-55.cgi>Tomcat 5.5</a>
+ <ul>
+ <li>WS-API builds as a standard servlet that can be deployed in most J2EE servlet container. 
+  Currently we've been using tomcat, but nothing Tomcat-specific is (intentionally) utilized by the code.
+ <li>Tomcat 6 or above should also work, though not tested
+ </ul>
+
+<P><li><a href=http://java.sun.com/javase/downloads/index_jdk5.jsp>JDK 1.5</a>
+ <ul>
+  <li>JDK 1.6 or above should also work, though not tested
+ </ul>
+ 
+<p><li><a href=http://dev.mysql.com/downloads/mysql/5.0.html#downloads>MySQL 5</a>
+  <ul>
+  <li>MySQL 6 should also work, though not tested
+ </ul>
+</ul>
+
+<hr size=1>
+
+<h3>Database Setup & Table Relations:</h3>
+<pre>
+* To create database:
+
+  Create schema 'yubico':
+
+$ mysql -uroot -ppassword
+> create database yubico;
+> grant all privileges on yubico.* to 'test'@'localhost' \
+  identified by 'password';
+> flush privileges;
+> exit
+
+Run the sql script <a href=db_schema.sql>db_schema.sql</a> to populate the newly created schema 'yubico'.
+
+* Table 'clients':
+
+A client is a Yubikey issuer that issues YubiKey to its users. The simplest deployment
+scenario is that you just need one client row (your organization) in this table with full 
+privileges defined in the 'perms' table below. Or optionally you can define an admin client
+that can delete keys, and a verify-only client that can do only OTP verification.
+
+* Table 'yubikeys':
+
+A yubikey row has a token_id (the public id if the Yubikey, modhex)
+and its secret is the modhex encoding of the AES key.
+
+The counter, low, and high are the values used to check for replay attacks.  
+
+* Table 'perms':
+
+It defines the permissions of the client.
+
+* To insert a row into the yubikey table:
+
+$ mysql -ureadwrite -ppassword -Dyubico
+> insert into yubikeys (id, token_id, secret) values(p, <public key id>, <aes key>);
+> exit
+
+<hr size=1>
+
+<h3></h3>
+
+<table width=100%>
+<tr><td><font face=arial size=2>
+Copyright 2008 <a href=http://yubico.com>Yubico</a>.
+Licensed under the Apache License, Version 2.0.
+</td></tr></table>
