@@ -1,0 +1,79 @@
+<pre>
+<h2>Requests and Responses</h2>
+
+Verification request
+---------------------
+
+HTTP POST or GET
+
+Required parameters:
+i = the identifier of the verifier
+s = the string recieved from the yubikey
+
+Optional parameters:
+t = timestamp
+h = sha-1 hmac of (s + t) using verifier's secret as key
+
+Example:
+http://yubikey.yubico.com/verify?id=1?s=vvvvvvcucrlcietctckflvn\
+  ncdgckubflugerlnr?t=2005-05-15T17:11:51Z?h=de2c7d25e1b3afad3e\
+  85a0bd17d9b100db4b3
+
+
+
+Verification response
+---------------------
+
+r = <status>, an integer value 1 to 100. See values table below.
+t = timestamp
+h = sha-1 hmac of (r + t) using verifier's secret as key, if
+    incoming parameters are ok
+
+Example, response on a good request:
+r=1
+t=2005-05-15T17:11:51Z
+h=d565c7d25e1b3afad3e85a0bd17d9b100db4b3
+
+Example, response on a bad verifier id:
+r=10
+t=2005-05-15T17:11:51Z
+
+Example, response on a bad hash:
+r=20
+t=2005-05-15T17:11:51Z
+h=d565c7d25e1b3afad3e85a0bd17d9b100db4b3
+
+
+
+Status table
+------------
+
+0 = unknown request
+1 = ok
+2 = missing parameter(s)
+...
+10 = unknown/malformed 'i'
+11 = unparsable/malformed 's'
+12 = unparsable/malformed 't'
+13 = unparsable/malformed 'h'
+...
+20 = incorrect 'h'
+...
+
+
+result code
+Required parameters:
+r = the identifier of the verifier
+s = the string recieved from the yubikey
+
+Optional parameters:
+h = sha-1 hmac of s using verifier's secret as key
+
+Example:
+http://yubikey.yubico.com/verify?id=1?s=vvvvvvcucrlcietctckflvnncdgckubflugerlnr?h=
+
+
+
+
+
+
