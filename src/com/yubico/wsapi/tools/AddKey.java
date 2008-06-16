@@ -14,9 +14,10 @@ import java.util.Iterator;
 import java.util.Properties;
 import com.yubico.wsapi.*;
 
-// java -cp ./out/wsapi.jar:./resources/tsik.jar:./resources/log4j-1.2.13.jar com.yubico.wsapi.tools.AddKey test/data/m1a.txt  571dmZQ9MJ5T983eDqhuOplnHk8= http://api.yubico.com/wsapi/add_client
 /**
  * Add a new YubiKey from command line.
+ * <br>
+ * Eg. java -cp ./out/wsapi.jar;./resources/tsik.jar;./resources/log4j-1.2.13.jar com.yubico.wsapi.tools.AddKey test\data\m2a.txt TWIWuqIJKVWhXPbVuxEiHv5GSA0= http://my_org/wsapi/add_key 
  */
 public class AddKey {
 	public static void main(String[] argv) throws Exception {

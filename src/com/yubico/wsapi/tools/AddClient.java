@@ -32,13 +32,15 @@ import java.util.Properties;
 import com.yubico.wsapi.*;
 
 /** 
- * Add a new client (issuer) from command line. 
+ * Add a new client (YubiKey issuer) from command line. 
+ * <br>
+ * Eg. java -cp ./out/wsapi.jar;./resources/tsik.jar;./resources/log4j-1.2.13.jar com.yubico.wsapi.tools.AddClient test\data\m1a.txt TWIWuqIJKVWhXPbVuxEiHv5GSA0= http://my_org/wsapi/add_client 
  * */
 public class AddClient {
 	public static void main(String[] argv) throws Exception {
 		if (argv.length != 3) {
 			System.err
-					.println("Usage: AddClient <filename> <shared secret> <dest>");
+					.println("Usage: AddClient <filename> <shared secret> <dest_url>");
 			return;
 		}
 		Properties p = new Properties();
