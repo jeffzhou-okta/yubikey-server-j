@@ -1,4 +1,0 @@
-table=nosuchtable
-operation=insert
-index=2
-needed=operation,t,table,h
