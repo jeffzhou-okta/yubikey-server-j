@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="lib" path="resources/base.jar"/>
+	<classpathentry kind="lib" path="resources/log4j-1.2.13.jar"/>
+	<classpathentry kind="lib" path="resources/javax.servlet.jar"/>
+	<classpathentry kind="lib" path="resources/tsik.jar"/>
+	<classpathentry kind="lib" path="resources/junit-3.8.1.jar"/>
+	<classpathentry kind="lib" path="resources/httpunit-1.6.2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="out"/>
+</classpath>
