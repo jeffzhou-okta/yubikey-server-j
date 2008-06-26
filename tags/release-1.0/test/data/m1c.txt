@@ -1,0 +1,2 @@
+table=yubikeys
+operation=count
