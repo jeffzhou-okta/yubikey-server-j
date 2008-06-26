@@ -4,4 +4,4 @@ After a month of testing and collecting feedback, Yubikey Server 1.0 is stable a
 
 = Details =
 
-svn checkout http://yubikey-server-j.googlecode.com/svn/trunk/ yubikey-server-j-read-only -r release-1.0
+svn checkout http://yubikey-server-j.googlecode.com/svn/tags/release-1.0 yubikey-server-j-read-only
