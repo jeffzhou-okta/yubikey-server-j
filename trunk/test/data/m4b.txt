@@ -1,4 +1,0 @@
-table=policies
-operation=nosuchoperation
-index=2
-needed=operation,t,table,h

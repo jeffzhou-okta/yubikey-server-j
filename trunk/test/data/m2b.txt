@@ -1,6 +1,0 @@
-table=verifiers
-operation=insert
-index=2
-policy=2
-secret=secret2
-

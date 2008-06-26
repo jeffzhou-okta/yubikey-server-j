@@ -1,7 +1,0 @@
-id=1
-operation=add_client
-email=root2@my_org.com
-verify_otp=true
-add_key=true
-delete_key=true
-nonce=1970-01-01T00:00:00Z
