@@ -1,0 +1,4 @@
+#labels FAQ,Featured,Phase-Support
+== How to parse the date in the response? ==
+
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'SSSS");
