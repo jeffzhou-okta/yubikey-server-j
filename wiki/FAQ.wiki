@@ -1,4 +1,17 @@
 #labels FAQ,Featured,Phase-Support
+== When should I generate AES keys for my Yubikeys? ==
+
+*Convenience:* The AES you generate can be put directly into the validation server you host and be programmed into your Yubikey directly. You no longer need to ask Yubico for the AES keys of your Yubikeys.
+
+*Privacy:* If you have the "trust no body" belief, you don't want to use the AES key generated in Yubico's manufacturing facility since that AES key also sits in Yubico's database.
+
+*Recycle:* You can re-generate the AES keys regularly if you want.
+
+*But...:* The catch is that your self-programmed Yubikey won't be able to 
+authenticate against Yubico's validation server any more. That means it can't 
+be used to log onto sites such as Forum.yubico.com, MashedLife.com, etc.
+
+
 == How to parse the date of the validation response from Yubico web service API? ==
 
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'SSSS");
