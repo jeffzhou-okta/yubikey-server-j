@@ -3,7 +3,7 @@
 
 *Convenience:* The AES you generate can be put directly into the validation server you host and be programmed into your Yubikey directly. You no longer need to ask Yubico for the AES keys of your Yubikeys.
 
-*Privacy:* If you have the "trust no body" belief, you don't want to use the AES key generated in Yubico's manufacturing facility since that AES key also sits in Yubico's database.
+*Privacy:* If you have the "trust no body" belief, you don't want to use the AES key generated in Yubico's manufacturing facility since that AES key also sits in Yubico's database. Then you can generate the AES keys on your own.
 
 *Recycle:* You can re-generate the AES keys regularly if you want.
 
