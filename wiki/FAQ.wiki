@@ -1,5 +1,5 @@
 #labels FAQ,Featured,Phase-Support
-== When should I generate AES keys for my Yubikeys? ==
+== When should I generate AES keys on my own for my Yubikeys? ==
 
 *Convenience:* The AES you generate can be put directly into the validation server you host and be programmed into your Yubikey directly. You no longer need to ask Yubico for the AES keys of your Yubikeys.
 
