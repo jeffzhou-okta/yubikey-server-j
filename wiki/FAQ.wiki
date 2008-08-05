@@ -11,10 +11,13 @@
 authenticate against Yubico's validation server any more. That means it can't 
 be used to log onto sites such as Forum.yubico.com, MashedLife.com, etc.
 
+----
 
 == How to parse the date of the validation response from Yubico web service API? ==
 
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'SSSS");
+
+----
 
 == How to map the database schema between the 2 PHP-based validation implementation? ==
 
@@ -99,3 +102,5 @@ Column by column mapping:
 
  -> (Php.2) yu_timestamp
 }}}
+
+----
