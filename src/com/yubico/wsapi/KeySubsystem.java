@@ -102,7 +102,7 @@ public class KeySubsystem {
 			log.info("seen high=" + seenHi);
 			log.info("Incoming otp=" + t);
 			log.info("Current info=" + yubikey);
-			return REPLAY_ERROR;
+			//return REPLAY_ERROR;
 		}
 		if (scDiff == 0 && hiDiff == 0 && loDiff > 0) {
 			log.info("low timestamp less than last seen");
@@ -110,7 +110,7 @@ public class KeySubsystem {
 			log.info("seen low=" + seenLo);
 			log.info("Incoming otp=" + t);
 			log.info("Current info=" + yubikey);
-			return REPLAY_ERROR;
+			//return REPLAY_ERROR;
 		}
 		if (scDiff == 0 && hiDiff == 0 && loDiff == 0) {
 			log.info("Replayed otp detected");
