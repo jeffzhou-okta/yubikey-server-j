@@ -100,7 +100,7 @@ public class KeySubsystem {
 			log.info("Current info=" + yubikey);
 			return REPLAY_ERROR;
 		}
-		if (suDiff > 0) {
+		if (scDiff == 0 && suDiff > 0) {
 		    log.info("session use less than last seen");
 		    log.info("session use="+sessionUse);
 		    log.info("seen session use="+seenSessionUse);
