@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 Yubico
+ * Copyright 2008, 2009 Yubico
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -204,10 +204,11 @@ public class Database {
 			int lastCounter = rs.getInt("counter");
 			int lastHi = rs.getInt("high");
 			int lastLow = rs.getInt("low");
+			int lastSessionUse = rs.getInt("sessionUse");
 			// conn.commit();
 			return new Yubikey(created, active, accessed, Secret
 					.fromBase64(secret), "" + clientId, tokenId, userId,
-					lastCounter, lastHi, lastLow);
+					   lastCounter, lastHi, lastLow, lastSessionUse);
 		} catch (SQLException e) {
 			log.warn(e);
 			return null;
@@ -220,7 +221,7 @@ public class Database {
 	}
 
 	static String upYubikey = "update yubikeys set accessed=?, counter=?, "
-			+ "high=?, low=? where tokenId=?";
+			+ "high=?, low=?, sessionUse=? where tokenId=?";
 
 	public void updateYubikeyOnTokenId(String id, Yubikey yubikey)
 			throws SQLException {
@@ -231,7 +232,8 @@ public class Database {
 		stmt.setInt(2, yubikey.getSessionCounter());
 		stmt.setInt(3, yubikey.getTimestampHigh());
 		stmt.setInt(4, yubikey.getTimestampLow());
-		stmt.setString(5, id);
+		stmt.setInt(5, yubikey.getSessionUse());
+		stmt.setString(6, id);
 		log.debug(stmt);
 		int num = stmt.executeUpdate();
 		if (num < 1) {

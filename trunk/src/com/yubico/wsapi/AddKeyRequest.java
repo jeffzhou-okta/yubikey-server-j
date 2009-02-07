@@ -67,7 +67,8 @@ public class AddKeyRequest extends KeyRequest {
 		String userId = Yubikey.createRandomUserId();
 
 		Yubikey key = new Yubikey(new java.util.Date(), true,
-				new java.util.Date(), secret, id, tokenId, userId, 0, 0, 0);
+					  new java.util.Date(), secret, id,
+					  tokenId, userId, 0, 0, 0, 0);
 		Map map = new HashMap();
 		map.put(Constants.OPERATION, getOperation());
 		map.put(Constants.NONCE, getNonce());
