@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 Yubico
+ * Copyright 2008, 2009 Yubico
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -40,9 +40,11 @@ public class Yubikey {
 
 	private int high;
 
+	private int sessionUse;
+
 	public Yubikey(Date created, boolean active, Date accessed, Secret secret,
-			String clientId, String tokenId, String userId, int counter,
-			int high, int low) {
+		       String clientId, String tokenId, String userId, int counter,
+		       int high, int low, int sessionUse) {
 		this.secret = secret;
 		this.active = active;
 		this.created = created;
@@ -53,6 +55,7 @@ public class Yubikey {
 		this.counter = counter;
 		this.high = high;
 		this.low = low;
+		this.sessionUse = sessionUse;
 	}
 
 	static Yubikey lookup(String tokenId) {
@@ -78,10 +81,11 @@ public class Yubikey {
 	// return Secret.fromBase64(res);
 	// }
 
-	void updateLastSeen(int counter, int high, int low) {
+	void updateLastSeen(int counter, int high, int low, int sessionUse) {
 		this.counter = counter;
 		this.high = high;
 		this.low = low;
+		this.sessionUse = sessionUse;
 		this.accessed = new java.util.Date();
 	}
 
@@ -95,6 +99,10 @@ public class Yubikey {
 
 	public int getTimestampLow() {
 		return low;
+	}
+
+	public int getSessionUse() {
+		return sessionUse;
 	}
 
 	Date getCreated() {
@@ -134,8 +142,13 @@ public class Yubikey {
 	}
 
 	public String toString() {
-		return "[Yubikey secret=" + secret + ", token ID=" + tokenId
-				+ ", token UID=" + userId + ", last counter=" + counter
-				+ ", high=" + high + ", low=" + low + "]";
+	    return "[Yubikey secret="+secret
+		+ ", token ID="+tokenId
+		+ ", token UID="+userId
+		+ ", last counter="+counter
+		+ ", high="+high
+		+ ", low="+low
+		+ ", session use="+sessionUse
+		+ "]";
 	}
 }

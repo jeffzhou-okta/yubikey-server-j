@@ -80,6 +80,10 @@ public class KeySubsystem {
 		int seenSessionCounter = yubikey.getSessionCounter();
 		int scDiff = seenSessionCounter - sessionCounter;
 
+		int sessionUse = t.getTimesUsed();
+		int seenSessionUse = yubikey.getSessionUse();
+		int suDiff = seenSessionUse - sessionUse;
+
 		int hi = t.getTimestampHigh() & 0xff;
 		int seenHi = yubikey.getTimestampHigh();
 		int hiDiff = seenHi - hi;
@@ -96,7 +100,15 @@ public class KeySubsystem {
 			log.info("Current info=" + yubikey);
 			return REPLAY_ERROR;
 		}
-		if (scDiff == 0 && hiDiff > 0) {
+		if (suDiff > 0) {
+		    log.info("session use less than last seen");
+		    log.info("session use="+sessionUse);
+		    log.info("seen session use="+seenSessionUse);
+		    log.info("Incoming otp="+t);
+		    log.info("Current info="+yubikey);
+		    return REPLAY_ERROR;
+		}
+		if (scDiff == 0 && suDiff == 0 && hiDiff > 0) {
 			log.info("high timestamp less than last seen");
 			log.info("high=" + hi);
 			log.info("seen high=" + seenHi);
@@ -104,7 +116,7 @@ public class KeySubsystem {
 			log.info("Current info=" + yubikey);
 			//return REPLAY_ERROR;
 		}
-		if (scDiff == 0 && hiDiff == 0 && loDiff > 0) {
+		if (scDiff == 0 && suDiff == 0 && hiDiff == 0 && loDiff > 0) {
 			log.info("low timestamp less than last seen");
 			log.info("low=" + lo);
 			log.info("seen low=" + seenLo);
@@ -112,14 +124,14 @@ public class KeySubsystem {
 			log.info("Current info=" + yubikey);
 			//return REPLAY_ERROR;
 		}
-		if (scDiff == 0 && hiDiff == 0 && loDiff == 0) {
+		if (scDiff == 0 && suDiff == 0 && hiDiff == 0 && loDiff == 0) {
 			log.info("Replayed otp detected");
 			log.info("Incoming otp=" + t);
 			log.info("Current info=" + yubikey);
 			return REPLAY_ERROR;
 		}
 
-		yubikey.updateLastSeen(sessionCounter, hi, lo);
+		yubikey.updateLastSeen(sessionCounter, hi, lo, sessionUse);
 		db.updateYubikeyOnTokenId(tokenId, yubikey);
 
 		return OK;

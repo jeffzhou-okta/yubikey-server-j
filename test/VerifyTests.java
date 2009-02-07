@@ -131,7 +131,7 @@ public class VerifyTests extends TestCase
 			  new java.util.Date(),
 			  Secret
 			  .fromModHex("vfundlgjfhitfuvccjlhirkdrgfttggt"), 
-			  "1", "1", "1", 0, 0, 0);
+			  "1", "1", "1", 0, 0, 0, 0);
 	String b64 = Crypto.toString(Secret.fromModHex("vvvvvvcu").toBytes());
 	Database.getDefault().updateYubikeyOnTokenId(b64, yk);
     }
