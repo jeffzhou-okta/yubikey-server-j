@@ -1,7 +1,0 @@
-#labels Featured,Phase-Implementation
-= Introduction =
-After a month of testing and collecting feedback, Yubikey Server 1.0 is stable and documented for release today.
-
-= Details =
-
-svn checkout http://yubikey-server-j.googlecode.com/svn/tags/release-1.0 yubikey-server-j-read-only
