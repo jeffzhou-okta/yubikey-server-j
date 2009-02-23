@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 Yubico
+ * Copyright 2008, 2009 Yubico
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -21,7 +21,7 @@ import com.yubico.wsapi.Secret;
 import com.yubico.wsapi.Crypto;
 
 /** 
- * Eg. java -cp ./out/wsapi.jar;./resources/base.jar;./resources/tsik.jar;./resources/log4j-1.2.13.jar com.yubico.wsapi.tools.ConvertModhex bnhtdkvrbfnbvrrurtvvrickdfvbuldtkububicktvuk
+ * Eg. java -cp ./out/wsapi.jar;./resources/yubico-base-1.1.jar;./resources/tsik.jar;./resources/log4j-1.2.13.jar com.yubico.wsapi.tools.ConvertModhex bnhtdkvrbfnbvrrurtvvrickdfvbuldtkububicktvuk
  */
 public class ConvertModhex {
 	public static void main(String[] argv) throws Exception {
