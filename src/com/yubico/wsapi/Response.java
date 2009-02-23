@@ -23,30 +23,37 @@ import org.apache.log4j.Logger;
 /**
  * Base of all response messages.
  */
-public abstract class Response extends Message {
-	static Logger log = Logger.getLogger(Response.class);
+public abstract class Response extends Message
+{
+  static Logger log = Logger.getLogger (Response.class);
 
-	Response(Map map) {
-		super(map);
-	}
+    Response (Map map)
+  {
+    super (map);
+  }
 
-	public Map toMap() {
-		return super.toMap();
-	}
+  public Map toMap ()
+  {
+    return super.toMap ();
+  }
 
-	public String getStatus() {
-		return (String) map.get(Constants.STATUS);
-	}
+  public String getStatus ()
+  {
+    return (String) map.get (Constants.STATUS);
+  }
 
-	void putStatus(String status) {
-		map.put(Constants.STATUS, status);
-	}
+  void putStatus (String status)
+  {
+    map.put (Constants.STATUS, status);
+  }
 
-	void putTimestamp(String timeStamp) {
-		map.put(Constants.TIMESTAMP, timeStamp);
-	}
+  void putTimestamp (String timeStamp)
+  {
+    map.put (Constants.TIMESTAMP, timeStamp);
+  }
 
-	public String toString() {
-		return "[Response " + super.toString() + "]";
-	}
+  public String toString ()
+  {
+    return "[Response " + super.toString () + "]";
+  }
 }

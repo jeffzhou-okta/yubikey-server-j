@@ -24,39 +24,50 @@ import java.io.UnsupportedEncodingException;
  * 
  *
  */
-public class Secret {
-	private byte[] secret;
+public class Secret
+{
+  private byte[] secret;
 
-	public Secret(byte[] secret) {
-		this.secret = secret;
-	}
+  public Secret (byte[]secret)
+  {
+    this.secret = secret;
+  }
 
-	public static Secret fromAscii(String s) throws IllegalArgumentException {
-		try {
-			return new Secret(s.getBytes("UTF-8"));
-		} catch (UnsupportedEncodingException e) {
-			throw new IllegalArgumentException(e);
-		}
-	}
+  public static Secret fromAscii (String s) throws IllegalArgumentException
+  {
+    try
+    {
+      return new Secret (s.getBytes ("UTF-8"));
+    }
+    catch (UnsupportedEncodingException e)
+    {
+      throw new IllegalArgumentException (e);
+    }
+  }
 
-	public static Secret fromBase64(String s) {
-		return new Secret(Crypto.toBytes(s));
-	}
+  public static Secret fromBase64 (String s)
+  {
+    return new Secret (Crypto.toBytes (s));
+  }
 
-	public static Secret fromModHex(String s) {
-		return new Secret(Modhex.decode(s));
-	}
+  public static Secret fromModHex (String s)
+  {
+    return new Secret (Modhex.decode (s));
+  }
 
-	public static Secret createRandom() {
-		byte[] b = new byte[16];
-		return new Secret(Crypto.createRandom(b));
-	}
+  public static Secret createRandom ()
+  {
+    byte[]b = new byte[16];
+    return new Secret (Crypto.createRandom (b));
+  }
 
-	public byte[] toBytes() {
-		return secret;
-	}
+  public byte[] toBytes ()
+  {
+    return secret;
+  }
 
-	public String toString() {
-		return "[Secret key=" + Crypto.toString(secret) + "]";
-	}
+  public String toString ()
+  {
+    return "[Secret key=" + Crypto.toString (secret) + "]";
+  }
 }

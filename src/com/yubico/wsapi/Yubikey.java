@@ -19,136 +19,154 @@ package com.yubico.wsapi;
 
 import java.util.Date;
 
-public class Yubikey {
-	private Secret secret;
+public class Yubikey
+{
+  private Secret secret;
 
-	private Date created;
+  private Date created;
 
-	private Date accessed;
+  private Date accessed;
 
-	private String tokenId;
+  private String tokenId;
 
-	private String userId;
+  private String userId;
 
-	private String clientId;
+  private String clientId;
 
-	private boolean active;
+  private boolean active;
 
-	private int counter;
+  private int counter;
 
-	private int low;
+  private int low;
 
-	private int high;
+  private int high;
 
-	private int sessionUse;
+  private int sessionUse;
 
-	public Yubikey(Date created, boolean active, Date accessed, Secret secret,
-		       String clientId, String tokenId, String userId, int counter,
-		       int high, int low, int sessionUse) {
-		this.secret = secret;
-		this.active = active;
-		this.created = created;
-		this.accessed = accessed;
-		this.tokenId = tokenId;
-		this.clientId = clientId;
-		this.userId = userId;
-		this.counter = counter;
-		this.high = high;
-		this.low = low;
-		this.sessionUse = sessionUse;
-	}
+  public Yubikey (Date created, boolean active, Date accessed, Secret secret,
+		  String clientId, String tokenId, String userId, int counter,
+		  int high, int low, int sessionUse)
+  {
+    this.secret = secret;
+    this.active = active;
+    this.created = created;
+    this.accessed = accessed;
+    this.tokenId = tokenId;
+    this.clientId = clientId;
+    this.userId = userId;
+    this.counter = counter;
+    this.high = high;
+    this.low = low;
+    this.sessionUse = sessionUse;
+  }
 
-	static Yubikey lookup(String tokenId) {
-		Database db = Database.getDefault();
-		return db.getYubikeyOnTokenId(tokenId);
-	}
+  static Yubikey lookup (String tokenId)
+  {
+    Database db = Database.getDefault ();
+    return db.getYubikeyOnTokenId (tokenId);
+  }
 
-	static String createRandomTokenId() {
-		byte[] b = new byte[6];
-		return Crypto.toString(Crypto.createRandom(b));
-	}
+  static String createRandomTokenId ()
+  {
+    byte[]b = new byte[6];
+    return Crypto.toString (Crypto.createRandom (b));
+  }
 
-	static String createRandomUserId() {
-		byte[] b = new byte[6];
-		return Crypto.toString(Crypto.createRandom(b));
-	}
+  static String createRandomUserId ()
+  {
+    byte[]b = new byte[6];
+    return Crypto.toString (Crypto.createRandom (b));
+  }
 
-	// public static String createRandom()
-	// {
-	// String s = UUID.generate().toString();
-	// String s2 = UUID.generate().toString();
-	// String res = Crypto.sign(s, Secret.fromAscii(s2));
-	// return Secret.fromBase64(res);
-	// }
+  // public static String createRandom()
+  // {
+  // String s = UUID.generate().toString();
+  // String s2 = UUID.generate().toString();
+  // String res = Crypto.sign(s, Secret.fromAscii(s2));
+  // return Secret.fromBase64(res);
+  // }
 
-	void updateLastSeen(int counter, int high, int low, int sessionUse) {
-		this.counter = counter;
-		this.high = high;
-		this.low = low;
-		this.sessionUse = sessionUse;
-		this.accessed = new java.util.Date();
-	}
+  void updateLastSeen (int counter, int high, int low, int sessionUse)
+  {
+    this.counter = counter;
+    this.high = high;
+    this.low = low;
+    this.sessionUse = sessionUse;
+    this.accessed = new java.util.Date ();
+  }
 
-	public int getSessionCounter() {
-		return counter;
-	}
+  public int getSessionCounter ()
+  {
+    return counter;
+  }
 
-	public int getTimestampHigh() {
-		return high;
-	}
+  public int getTimestampHigh ()
+  {
+    return high;
+  }
 
-	public int getTimestampLow() {
-		return low;
-	}
+  public int getTimestampLow ()
+  {
+    return low;
+  }
 
-	public int getSessionUse() {
-		return sessionUse;
-	}
+  public int getSessionUse ()
+  {
+    return sessionUse;
+  }
 
-	Date getCreated() {
-		return created;
-	}
+  Date getCreated ()
+  {
+    return created;
+  }
 
-	Date getAccessed() {
-		return accessed;
-	}
+  Date getAccessed ()
+  {
+    return accessed;
+  }
 
-	boolean getActive() {
-		return active;
-	}
+  boolean getActive ()
+  {
+    return active;
+  }
 
-	Secret getSecret() {
-		return secret;
-	}
+  Secret getSecret ()
+  {
+    return secret;
+  }
 
-	String getTokenId() {
-		return tokenId;
-	}
+  String getTokenId ()
+  {
+    return tokenId;
+  }
 
-	String getUserId() {
-		return userId;
-	}
+  String getUserId ()
+  {
+    return userId;
+  }
 
-	String getClientId() {
-		return clientId;
-	}
+  String getClientId ()
+  {
+    return clientId;
+  }
 
-	void setTokenId(String tokenId) {
-		this.tokenId = tokenId;
-	}
+  void setTokenId (String tokenId)
+  {
+    this.tokenId = tokenId;
+  }
 
-	void setUserId(String userId) {
-		this.userId = userId;
-	}
+  void setUserId (String userId)
+  {
+    this.userId = userId;
+  }
 
-	public String toString() {
-	    return "[Yubikey secret="+secret
-		+ ", token ID="+tokenId
-		+ ", token UID="+userId
-		+ ", last counter="+counter
-		+ ", high="+high
-		+ ", low="+low
-		+ ", session use="+sessionUse
-		+ "]";
-	}
+  public String toString ()
+  {
+    return "[Yubikey secret=" + secret
+      + ", token ID=" + tokenId
+      + ", token UID=" + userId
+      + ", last counter=" + counter
+      + ", high=" + high
+      + ", low=" + low + ", session use=" + sessionUse + "]";
+  }
 }

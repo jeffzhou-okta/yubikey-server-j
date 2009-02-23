@@ -17,23 +17,27 @@
  */
 package com.yubico.wsapi;
 
-public class InvalidMessageException extends Exception {
-	private static final long serialVersionUID = 2873422197623L;
+public class InvalidMessageException extends Exception
+{
+  private static final long serialVersionUID = 2873422197623L;
 
-	private String reason;
+  private String reason;
 
-	private String info;
+  private String info;
 
-	public InvalidMessageException(String reason, String info) {
-		this.reason = reason;
-		this.info = info;
-	}
+  public InvalidMessageException (String reason, String info)
+  {
+    this.reason = reason;
+    this.info = info;
+  }
 
-	public String getReason() {
-		return reason;
-	}
+  public String getReason ()
+  {
+    return reason;
+  }
 
-	public String getExtraInfo() {
-		return info;
-	}
+  public String getExtraInfo ()
+  {
+    return info;
+  }
 }

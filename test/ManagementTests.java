@@ -37,132 +37,132 @@ import com.yubico.wsapi.Secret;
 
 public class ManagementTests extends TestCase
 {
-    ServletRunner sr;
-    static Logger log = Logger.getLogger(ManagementTests.class);
+  ServletRunner sr;
+  static Logger log = Logger.getLogger (ManagementTests.class);
 
-    public ManagementTests(String name) 
-    {
-	super(name);
-    }
+  public ManagementTests (String name)
+  {
+    super (name);
+  }
 
-    protected void setUp() throws Exception 
-    {
-	super.setUp();
-    	sr = new ServletRunner(new File("web.xml"));
-    }
+  protected void setUp () throws Exception
+  {
+    super.setUp ();
+    sr = new ServletRunner (new File ("web.xml"));
+  }
 
-    protected void tearDown() throws Exception 
-    {
-	super.tearDown();
-	sr.shutDown();
-    }
+  protected void tearDown () throws Exception
+  {
+    super.tearDown ();
+    sr.shutDown ();
+  }
 
-    public static Test suite() 
-    {
-        TestSuite suite = new TestSuite(ManagementTests.class);
+  public static Test suite ()
+  {
+    TestSuite suite = new TestSuite (ManagementTests.class);
 
-	TestSetup wrapper = new TestSetup(suite) {
-	   protected void setUp() {
-	       // org.apache.log4j.BasicConfigurator.configure();
-	   }
-        };
-	return wrapper;
-    }
+    TestSetup wrapper = new TestSetup (suite) {
+      protected void setUp (){
+			      // org.apache.log4j.BasicConfigurator.configure();
+			      }
+    };
+    return wrapper;
+  }
 
-    static Secret secret = Secret.fromBase64("571dmZQ9MJ5T983eDqhuOplnHk8=");
+  static Secret secret = Secret.fromBase64 ("571dmZQ9MJ5T983eDqhuOplnHk8=");
 
-    static String sharedKey;
-    static String clientId;
-    static String tokenId;
+  static String sharedKey;
+  static String clientId;
+  static String tokenId;
 
-    public void testAddClient() throws Exception
-    {
-	log.info("-----------testAddClient()");
+  public void testAddClient () throws Exception
+  {
+    log.info ("-----------testAddClient()");
 
-	Map map = Utils.readFile("m1a.txt");
-	AddClientRequest req = new AddClientRequest(map);
-	req.sign(secret);	
+    Map map = Utils.readFile ("m1a.txt");
+    AddClientRequest req = new AddClientRequest (map);
+      req.sign (secret);
 
-	Response resp = Utils.sendManagement(sr, req);
-	assertTrue(resp.verifySignature(secret));
-	String result = resp.getStatus();
-	assertTrue(result, result.equals(Constants.OK));
+    Response resp = Utils.sendManagement (sr, req);
+      assertTrue (resp.verifySignature (secret));
+    String result = resp.getStatus ();
+      assertTrue (result, result.equals (Constants.OK));
 
-	AddClientResponse response = (AddClientResponse) resp;
-	assertTrue(response.getNonce().equals("1970-01-01T00:00:00Z"));
-	ManagementTests.sharedKey = response.getSharedSecret();
-	ManagementTests.clientId = response.getClientId();
-    }
+    AddClientResponse response = (AddClientResponse) resp;
+      assertTrue (response.getNonce ().equals ("1970-01-01T00:00:00Z"));
+      ManagementTests.sharedKey = response.getSharedSecret ();
+      ManagementTests.clientId = response.getClientId ();
+  }
 
-    public void testAddKey() throws Exception
-    {
-	log.info("-------------testAddKey()");
-	Map map = Utils.readFile("m2a.txt");
-	map.put(Constants.IDENTIFIER, ManagementTests.clientId);
-	AddKeyRequest req = new AddKeyRequest(map);
-	Secret mySecret = Secret.fromBase64(sharedKey);	
-	req.sign(mySecret);	
+  public void testAddKey () throws Exception
+  {
+    log.info ("-------------testAddKey()");
+    Map map = Utils.readFile ("m2a.txt");
+      map.put (Constants.IDENTIFIER, ManagementTests.clientId);
+    AddKeyRequest req = new AddKeyRequest (map);
+    Secret mySecret = Secret.fromBase64 (sharedKey);
+      req.sign (mySecret);
 
-	Response resp = Utils.sendManagement(sr, req);
-	assertTrue(resp.verifySignature(mySecret));
-	String result = resp.getStatus();
-	assertTrue(result, result.equals(Constants.OK));
- 
-	AddKeyResponse response = (AddKeyResponse) resp;
-	assertTrue(response.getNonce().equals("1970-01-01T00:00:00Z"));
-	ManagementTests.tokenId = response.getTokenId();
-    }
+    Response resp = Utils.sendManagement (sr, req);
+      assertTrue (resp.verifySignature (mySecret));
+    String result = resp.getStatus ();
+      assertTrue (result, result.equals (Constants.OK));
 
-    public void testDeleteKey() throws Exception
-    {
-	log.info("-------------testDeleteKey()");
-	Map map = Utils.readFile("m3a.txt");
-	map.put(Constants.IDENTIFIER, ManagementTests.clientId);
-	map.put(Constants.KEY_ID, ManagementTests.tokenId);
-	DeleteKeyRequest req = new DeleteKeyRequest(map);
-	Secret mySecret = Secret.fromBase64(sharedKey);	
-	req.sign(mySecret);	
+    AddKeyResponse response = (AddKeyResponse) resp;
+      assertTrue (response.getNonce ().equals ("1970-01-01T00:00:00Z"));
+      ManagementTests.tokenId = response.getTokenId ();
+  }
 
-	Response resp = Utils.sendManagement(sr, req);
-	assertTrue(resp.verifySignature(mySecret));
-	String result = resp.getStatus();
-	assertTrue(result, result.equals(Constants.OK));
-    }
+  public void testDeleteKey () throws Exception
+  {
+    log.info ("-------------testDeleteKey()");
+    Map map = Utils.readFile ("m3a.txt");
+      map.put (Constants.IDENTIFIER, ManagementTests.clientId);
+      map.put (Constants.KEY_ID, ManagementTests.tokenId);
+    DeleteKeyRequest req = new DeleteKeyRequest (map);
+    Secret mySecret = Secret.fromBase64 (sharedKey);
+      req.sign (mySecret);
 
-    public void testAddClientWithoutAddClientPerm() throws Exception
-    {
-	log.info("-------------testAddClientWithout()");
-	Map map = Utils.readFile("m1a.txt");
-	map.put(Constants.IDENTIFIER, ManagementTests.clientId);
-	map.put(Constants.EMAIL, "testclient2@example.com");
-	AddClientRequest req = new AddClientRequest(map);
-	Secret mySecret = Secret.fromBase64(sharedKey);	
-	req.sign(mySecret);	
+    Response resp = Utils.sendManagement (sr, req);
+      assertTrue (resp.verifySignature (mySecret));
+    String result = resp.getStatus ();
+      assertTrue (result, result.equals (Constants.OK));
+  }
 
-	Response resp = Utils.sendManagement(sr, req);
-	assertTrue(resp.verifySignature(mySecret));
-	String result = resp.getStatus();
-	assertTrue(result, result.equals(Constants.E_OPERATION_NOT_ALLOWED));
-    }
+  public void testAddClientWithoutAddClientPerm () throws Exception
+  {
+    log.info ("-------------testAddClientWithout()");
+    Map map = Utils.readFile ("m1a.txt");
+      map.put (Constants.IDENTIFIER, ManagementTests.clientId);
+      map.put (Constants.EMAIL, "testclient2@example.com");
+    AddClientRequest req = new AddClientRequest (map);
+    Secret mySecret = Secret.fromBase64 (sharedKey);
+      req.sign (mySecret);
 
-    public void testAddClientWithAddClientPerm() throws Exception
-    {
-	log.info("-------------testAddClientWith()");
-	Map map = Utils.readFile("m1a.txt");
-	map.put(Constants.DELETE_CLIENT, "true");
-	map.put(Constants.EMAIL, "testclient3@example.com");
-	AddClientRequest req = new AddClientRequest(map);
-	req.sign(secret);	
+    Response resp = Utils.sendManagement (sr, req);
+      assertTrue (resp.verifySignature (mySecret));
+    String result = resp.getStatus ();
+      assertTrue (result, result.equals (Constants.E_OPERATION_NOT_ALLOWED));
+  }
 
-	Response resp = Utils.sendManagement(sr, req);
-	assertTrue(resp.verifySignature(secret));
-	String result = resp.getStatus();
-	assertTrue(result, result.equals(Constants.OK));
+  public void testAddClientWithAddClientPerm () throws Exception
+  {
+    log.info ("-------------testAddClientWith()");
+    Map map = Utils.readFile ("m1a.txt");
+      map.put (Constants.DELETE_CLIENT, "true");
+      map.put (Constants.EMAIL, "testclient3@example.com");
+    AddClientRequest req = new AddClientRequest (map);
+      req.sign (secret);
 
-	AddClientResponse response = (AddClientResponse) resp;
-	assertTrue(response.getNonce().equals("1970-01-01T00:00:00Z"));
-	ManagementTests.sharedKey = response.getSharedSecret();
-	ManagementTests.clientId = response.getClientId();
-    }
+    Response resp = Utils.sendManagement (sr, req);
+      assertTrue (resp.verifySignature (secret));
+    String result = resp.getStatus ();
+      assertTrue (result, result.equals (Constants.OK));
+
+    AddClientResponse response = (AddClientResponse) resp;
+      assertTrue (response.getNonce ().equals ("1970-01-01T00:00:00Z"));
+      ManagementTests.sharedKey = response.getSharedSecret ();
+      ManagementTests.clientId = response.getClientId ();
+  }
 
 }

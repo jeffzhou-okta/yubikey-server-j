@@ -24,38 +24,46 @@ import org.apache.log4j.Logger;
  * Base of all Yubikey management related requests
  * 
  */
-abstract public class KeyRequest extends Request {
-	private final static Logger log = Logger.getLogger(KeyRequest.class);
+abstract public class KeyRequest extends Request
+{
+  private final static Logger log = Logger.getLogger (KeyRequest.class);
 
-	public void checkIsValid() throws InvalidMessageException {
-		if (getOperation() == null) {
-			log.info("Missing " + Constants.OPERATION);
-			throw new InvalidMessageException(Constants.E_MISSING_PARAMETER,
-					Constants.OPERATION);
-		}
-		if (getIdentifier() == null) {
-			log.info("Missing " + Constants.IDENTIFIER);
-			throw new InvalidMessageException(Constants.E_MISSING_PARAMETER,
-					Constants.IDENTIFIER);
-		}
-		if (getNonce() == null) {
-			log.info("Missing " + Constants.NONCE);
-			throw new InvalidMessageException(Constants.E_MISSING_PARAMETER,
-					Constants.NONCE);
-		}
-	}
+  public void checkIsValid () throws InvalidMessageException
+  {
+    if (getOperation () == null)
+      {
+	log.info ("Missing " + Constants.OPERATION);
+	throw new InvalidMessageException (Constants.E_MISSING_PARAMETER,
+					   Constants.OPERATION);
+      }
+    if (getIdentifier () == null)
+      {
+	log.info ("Missing " + Constants.IDENTIFIER);
+	throw new InvalidMessageException (Constants.E_MISSING_PARAMETER,
+					   Constants.IDENTIFIER);
+      }
+    if (getNonce () == null)
+      {
+	log.info ("Missing " + Constants.NONCE);
+	throw new InvalidMessageException (Constants.E_MISSING_PARAMETER,
+					   Constants.NONCE);
+      }
+  }
 
-	String getKeyId() {
-		return (String) map.get(Constants.KEY_ID);
-	}
+  String getKeyId ()
+  {
+    return (String) map.get (Constants.KEY_ID);
+  }
 
-	public KeyRequest(Map map) throws InvalidMessageException {
-		super(map);
-	}
+  public KeyRequest (Map map) throws InvalidMessageException
+  {
+    super (map);
+  }
 
-	abstract public Response process();
+  abstract public Response process ();
 
-	public String toString() {
-		return "[KeyRequest " + super.toString() + "]";
-	}
+  public String toString ()
+  {
+    return "[KeyRequest " + super.toString () + "]";
+  }
 }

@@ -25,24 +25,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
-public class ManagementServlet extends WsApiServlet {
-	private static final long serialVersionUID = 2873429797623L;
+public class ManagementServlet extends WsApiServlet
+{
+  private static final long serialVersionUID = 2873429797623L;
 
-	static Logger log = Logger.getLogger(ManagementServlet.class);
+  static Logger log = Logger.getLogger (ManagementServlet.class);
 
-	private ManageRequestFactory mrf;
+  private ManageRequestFactory mrf;
 
-	public void init(ServletConfig config) throws ServletException {
-		super.init(config);
+  public void init (ServletConfig config) throws ServletException
+  {
+    super.init (config);
 
-		ManageRequestFactory mrf = ManageRequestFactory.getDefault();
-		this.mrf = mrf;
-	}
+    ManageRequestFactory mrf = ManageRequestFactory.getDefault ();
+      this.mrf = mrf;
+  }
 
-	public void doQuery(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		log.debug("in ManagementServlet");
-		Map map = req.getParameterMap();
-		print(resp, mrf.createFrom(map).process());
-	}
+  public void doQuery (HttpServletRequest req, HttpServletResponse resp)
+    throws ServletException, IOException
+  {
+    log.debug ("in ManagementServlet");
+    Map map = req.getParameterMap ();
+      print (resp, mrf.createFrom (map).process ());
+  }
 }

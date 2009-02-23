@@ -19,12 +19,15 @@ package com.yubico.wsapi;
 
 import java.util.Map;
 
-public class VerifyRequestFactory extends RequestFactory {
-	public static RequestFactory getDefault() {
-		return new VerifyRequestFactory();
-	}
+public class VerifyRequestFactory extends RequestFactory
+{
+  public static RequestFactory getDefault ()
+  {
+    return new VerifyRequestFactory ();
+  }
 
-	Request generate(Map normalizedMap) throws InvalidMessageException {
-		return new VerificationRequest(normalizedMap);
-	}
+  Request generate (Map normalizedMap) throws InvalidMessageException
+  {
+    return new VerificationRequest (normalizedMap);
+  }
 }

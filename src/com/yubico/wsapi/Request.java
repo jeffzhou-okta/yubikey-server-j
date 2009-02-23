@@ -22,49 +22,60 @@ import java.util.Map;
 /**
  * Base class of all kinds of incoming requests
  */
-public abstract class Request extends Message {
-	Request(Map map) throws InvalidMessageException {
-		super(map);
-		checkIsValid();
-	}
+public abstract class Request extends Message
+{
+  Request (Map map) throws InvalidMessageException
+  {
+    super (map);
+    checkIsValid ();
+  }
 
-	public Map toMap() {
-		return super.toMap();
-	}
+  public Map toMap ()
+  {
+    return super.toMap ();
+  }
 
-	boolean isSigned() {
-		return getHash() != null;
-	}
+  boolean isSigned ()
+  {
+    return getHash () != null;
+  }
 
-	boolean signatureVerifies(Client c) {
-		return verifySignature(c.getSecret());
-	}
+  boolean signatureVerifies (Client c)
+  {
+    return verifySignature (c.getSecret ());
+  }
 
-	String getNonce() {
-		return (String) map.get(Constants.NONCE);
-	}
+  String getNonce ()
+  {
+    return (String) map.get (Constants.NONCE);
+  }
 
-	String getOperation() {
-		return (String) map.get(Constants.OPERATION);
-	}
+  String getOperation ()
+  {
+    return (String) map.get (Constants.OPERATION);
+  }
 
-	String getIdentifier() {
-		return (String) map.get(Constants.IDENTIFIER);
-	}
+  String getIdentifier ()
+  {
+    return (String) map.get (Constants.IDENTIFIER);
+  }
 
-	String getOtp() {
-		return (String) map.get(Constants.OTP);
-	}
+  String getOtp ()
+  {
+    return (String) map.get (Constants.OTP);
+  }
 
-	String get(String key) {
-		return (String) map.get(key);
-	}
+  String get (String key)
+  {
+    return (String) map.get (key);
+  }
 
-	public abstract void checkIsValid() throws InvalidMessageException;
+  public abstract void checkIsValid () throws InvalidMessageException;
 
-	public abstract Response process();
+  public abstract Response process ();
 
-	public String toString() {
-		return "[Request " + super.toString() + "]";
-	}
+  public String toString ()
+  {
+    return "[Request " + super.toString () + "]";
+  }
 }

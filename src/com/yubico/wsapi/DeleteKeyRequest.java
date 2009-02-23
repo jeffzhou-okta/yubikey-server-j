@@ -23,63 +23,75 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-public class DeleteKeyRequest extends KeyRequest {
-	private final static Logger log = Logger.getLogger(DeleteKeyRequest.class);
+public class DeleteKeyRequest extends KeyRequest
+{
+  private final static Logger log = Logger.getLogger (DeleteKeyRequest.class);
 
-	public DeleteKeyRequest(Map map) throws InvalidMessageException {
-		super(map);
-	}
+  public DeleteKeyRequest (Map map) throws InvalidMessageException
+  {
+    super (map);
+  }
 
-	public Response process() {
-		String id = getIdentifier();
-		Client c = Client.lookup(id);
-		if (c == null) {
-			log.info("no client '" + id + "' available");
-			Map map = new HashMap();
-			map.put(Constants.STATUS, Constants.E_NO_SUCH_CLIENT);
-			return DeleteKeyResponse.create(map);
-		}
+  public Response process ()
+  {
+    String id = getIdentifier ();
+    Client c = Client.lookup (id);
+    if (c == null)
+      {
+	log.info ("no client '" + id + "' available");
+	Map map = new HashMap ();
+	  map.put (Constants.STATUS, Constants.E_NO_SUCH_CLIENT);
+	  return DeleteKeyResponse.create (map);
+      }
 
-		if (!isSigned() || !signatureVerifies(c)) {
-			Map map = new HashMap();
-			map.put(Constants.STATUS, Constants.E_BAD_SIGNATURE);
-			return DeleteKeyResponse.create(map);
-		}
+    if (!isSigned () || !signatureVerifies (c))
+      {
+	Map map = new HashMap ();
+	map.put (Constants.STATUS, Constants.E_BAD_SIGNATURE);
+	return DeleteKeyResponse.create (map);
+      }
 
-		if (!c.checkPerms(this)) {
-			Map map = new HashMap();
-			map.put(Constants.STATUS, Constants.E_OPERATION_NOT_ALLOWED);
-			return DeleteKeyResponse.create(map);
-		}
+    if (!c.checkPerms (this))
+      {
+	Map map = new HashMap ();
+	map.put (Constants.STATUS, Constants.E_OPERATION_NOT_ALLOWED);
+	return DeleteKeyResponse.create (map);
+      }
 
-		String keyId = getKeyId();
-		Yubikey yk = Yubikey.lookup(keyId);
-		if (yk == null) {
-			log.info("no yubikey '" + keyId + "' available");
-			Map map = new HashMap();
-			map.put(Constants.STATUS, Constants.E_NO_SUCH_YUBIKEY);
-			return DeleteKeyResponse.create(map);
-		}
+    String keyId = getKeyId ();
+    Yubikey yk = Yubikey.lookup (keyId);
+    if (yk == null)
+      {
+	log.info ("no yubikey '" + keyId + "' available");
+	Map map = new HashMap ();
+	map.put (Constants.STATUS, Constants.E_NO_SUCH_YUBIKEY);
+	return DeleteKeyResponse.create (map);
+      }
 
-		if (!(id.equals(yk.getClientId()))) {
-			log.info("client '" + id + "' is not owner of key '" + keyId + "'");
-			Map map = new HashMap();
-			map.put(Constants.STATUS, Constants.E_OPERATION_NOT_ALLOWED);
-			return DeleteKeyResponse.create(map);
-		}
+    if (!(id.equals (yk.getClientId ())))
+      {
+	log.info ("client '" + id + "' is not owner of key '" + keyId + "'");
+	Map map = new HashMap ();
+	map.put (Constants.STATUS, Constants.E_OPERATION_NOT_ALLOWED);
+	return DeleteKeyResponse.create (map);
+      }
 
-		try {
-			Database.getDefault().deleteKey(yk);
-			map.put(Constants.STATUS, Constants.OK);
-		} catch (SQLException e) {
-			log.warn("while deleting key " + keyId);
-			log.warn(e);
-			map.put(Constants.STATUS, Constants.E_BACKEND_ERROR);
-		}
-		return DeleteKeyResponse.create(c, map);
-	}
+    try
+    {
+      Database.getDefault ().deleteKey (yk);
+      map.put (Constants.STATUS, Constants.OK);
+    }
+    catch (SQLException e)
+    {
+      log.warn ("while deleting key " + keyId);
+      log.warn (e);
+      map.put (Constants.STATUS, Constants.E_BACKEND_ERROR);
+    }
+    return DeleteKeyResponse.create (c, map);
+  }
 
-	public String toString() {
-		return "[DeleteKeyRequest " + super.toString() + "]";
-	}
+  public String toString ()
+  {
+    return "[DeleteKeyRequest " + super.toString () + "]";
+  }
 }

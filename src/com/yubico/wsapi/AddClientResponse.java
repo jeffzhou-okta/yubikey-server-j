@@ -25,40 +25,49 @@ import org.apache.log4j.Logger;
  * The response to an AddClientRequest
  * @see Class AddClientRequest
  */
-public class AddClientResponse extends Response {
-	static Logger log = Logger.getLogger(AddClientResponse.class);
+public class AddClientResponse extends Response
+{
+  static Logger log = Logger.getLogger (AddClientResponse.class);
 
-	AddClientResponse(Map map) {
-		super(map);
-	}
+    AddClientResponse (Map map)
+  {
+    super (map);
+  }
 
-	static AddClientResponse create(Map map) {
-		return create(null, map);
-	}
+  static AddClientResponse create (Map map)
+  {
+    return create (null, map);
+  }
 
-	public String getNonce() {
-		return (String) map.get(Constants.NONCE);
-	}
+  public String getNonce ()
+  {
+    return (String) map.get (Constants.NONCE);
+  }
 
-	public String getClientId() {
-		return (String) map.get(Constants.CLIENT_ID);
-	}
+  public String getClientId ()
+  {
+    return (String) map.get (Constants.CLIENT_ID);
+  }
 
-	public String getSharedSecret() {
-		return (String) map.get(Constants.SHARED_SECRET);
-	}
+  public String getSharedSecret ()
+  {
+    return (String) map.get (Constants.SHARED_SECRET);
+  }
 
-	static AddClientResponse create(Client signer, Map map) {
-		AddClientResponse r = new AddClientResponse(map);
-		if (signer != null) {
-			String ts = DateUtils.getTimeStamp();
-			r.putTimestamp(ts);
-			r.sign(signer.getSecret());
-		}
-		return r;
-	}
+  static AddClientResponse create (Client signer, Map map)
+  {
+    AddClientResponse r = new AddClientResponse (map);
+    if (signer != null)
+      {
+	String ts = DateUtils.getTimeStamp ();
+	r.putTimestamp (ts);
+	r.sign (signer.getSecret ());
+      }
+    return r;
+  }
 
-	public String toString() {
-		return "[AddClientResponse " + super.toString() + "]";
-	}
+  public String toString ()
+  {
+    return "[AddClientResponse " + super.toString () + "]";
+  }
 }

@@ -28,75 +28,90 @@ import org.apache.log4j.Logger;
 /**
  * Message is the base class that defines all request and response messages.
  */
-public abstract class Message {
-	static Logger log = Logger.getLogger(Message.class);
+public abstract class Message
+{
+  static Logger log = Logger.getLogger (Message.class);
 
-	Map map;
+  Map map;
 
-	Message(Map m) {
-		map = new HashMap();
-		map.putAll(m);
-	}
+    Message (Map m)
+  {
+    map = new HashMap ();
+    map.putAll (m);
+  }
 
 	/**
 	 * Returns a map representation of this message.
 	 * 
 	 * @return the map.
 	 */
-	public Map toMap() {
-		Map tmp = new HashMap();
-		tmp.putAll(map);
-		return tmp;
-	}
+  public Map toMap ()
+  {
+    Map tmp = new HashMap ();
+    tmp.putAll (map);
+    return tmp;
+  }
 
-	public String toGetString() {
-		StringBuffer sb = new StringBuffer();
-		Iterator iter = toMap().entrySet().iterator();
-		while (iter.hasNext()) {
-			try {
-				Map.Entry me = (Map.Entry) iter.next();
-				sb.append(URLEncoder.encode((String) me.getKey(), "UTF-8"));
-				sb.append("=");
-				sb.append(URLEncoder.encode((String) me.getValue(), "UTF-8"));
-				if (iter.hasNext()) {
-					sb.append("&");
-				}
-			} catch (UnsupportedEncodingException e) {
-				// ignore
-			}
-		}
-		return sb.toString();
+  public String toGetString ()
+  {
+    StringBuffer sb = new StringBuffer ();
+    Iterator iter = toMap ().entrySet ().iterator ();
+    while (iter.hasNext ())
+      {
+	try
+	{
+	  Map.Entry me = (Map.Entry) iter.next ();
+	  sb.append (URLEncoder.encode ((String) me.getKey (), "UTF-8"));
+	  sb.append ("=");
+	  sb.append (URLEncoder.encode ((String) me.getValue (), "UTF-8"));
+	  if (iter.hasNext ())
+	    {
+	      sb.append ("&");
+	    }
 	}
+	catch (UnsupportedEncodingException e)
+	{
+	  // ignore
+	}
+      }
+    return sb.toString ();
+  }
 
-	public String getHash() {
-		return (String) map.get(Constants.HMAC);
-	}
+  public String getHash ()
+  {
+    return (String) map.get (Constants.HMAC);
+  }
 
-	public void setHash(String hash) {
-		map.put(Constants.HMAC, hash);
-	}
+  public void setHash (String hash)
+  {
+    map.put (Constants.HMAC, hash);
+  }
 
-	public String getTimestamp() {
-		return (String) map.get(Constants.TIMESTAMP);
-	}
+  public String getTimestamp ()
+  {
+    return (String) map.get (Constants.TIMESTAMP);
+  }
 
-	public boolean verifySignature(Secret secret) {
-		log.debug("message.verify, map=" + map + ", secret=" + secret);
-		String hash = getHash();
-		Map map = toMap();
-		map.remove(Constants.HMAC);
-		log.debug("message.verify, map=" + map + ", hash=" + hash);
-		return Crypto.verify(hash, map, secret);
-	}
+  public boolean verifySignature (Secret secret)
+  {
+    log.debug ("message.verify, map=" + map + ", secret=" + secret);
+    String hash = getHash ();
+    Map map = toMap ();
+    map.remove (Constants.HMAC);
+    log.debug ("message.verify, map=" + map + ", hash=" + hash);
+    return Crypto.verify (hash, map, secret);
+  }
 
-	public void sign(Secret secret) {
-		Map map = toMap();
-		map.remove(Constants.HMAC);
-		log.debug("message.sign, map=" + map);
-		setHash(Crypto.sign(map, secret));
-	}
+  public void sign (Secret secret)
+  {
+    Map map = toMap ();
+    map.remove (Constants.HMAC);
+    log.debug ("message.sign, map=" + map);
+    setHash (Crypto.sign (map, secret));
+  }
 
-	public String toString() {
-		return "[Message map=" + map + "]";
-	}
+  public String toString ()
+  {
+    return "[Message map=" + map + "]";
+  }
 }

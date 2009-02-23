@@ -20,21 +20,29 @@ package com.yubico.wsapi;
 import java.util.Iterator;
 import java.util.Map;
 
-public class FactoryUtil {
-	static Map normalize(Map map) {
-		Iterator iter = map.entrySet().iterator();
-		while (iter.hasNext()) {
-			Map.Entry me = (Map.Entry) iter.next();
-			Object o = me.getValue();
-			if (o instanceof String) {
-				continue;
-			} else if (o instanceof String[]) {
-				String[] s = (String[]) o;
-				me.setValue(s[0]);
-			} else {
-				throw new IllegalArgumentException("Cannot normalize " + o);
-			}
-		}
-		return map;
-	}
+public class FactoryUtil
+{
+  static Map normalize (Map map)
+  {
+    Iterator iter = map.entrySet ().iterator ();
+    while (iter.hasNext ())
+      {
+	Map.Entry me = (Map.Entry) iter.next ();
+	Object o = me.getValue ();
+	if (o instanceof String)
+	  {
+	    continue;
+	  }
+	else if (o instanceof String[])
+	  {
+	    String[]s = (String[])o;
+	    me.setValue (s[0]);
+	  }
+	else
+	  {
+	    throw new IllegalArgumentException ("Cannot normalize " + o);
+	  }
+      }
+    return map;
+  }
 }
