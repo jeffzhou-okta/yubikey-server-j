@@ -1,5 +1,0 @@
-YubiKey Validation and Management Server Project
-
-= Introduction =
-
-YubiKey Validation and Management Server was first developed by Yubico and Yubico made it an open source project starting from June, 2008. Anyone that likes to participate the development work please contact send your bio, availability, modules you are interested to work on to Tech@Yubico.com. Yubico will continue coordinate the community efforts and make enhancements in new releases regularly.
