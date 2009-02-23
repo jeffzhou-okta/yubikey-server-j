@@ -25,30 +25,34 @@ import com.yubico.wsapi.Crypto;
  * Convert a tab-delimited data file into a YubiKey insertion 
  * SQL statement 
  */
-public class ConvertPoflog {
-	public static void main(String[] argv) throws Exception {
-		FileInputStream fstream = new FileInputStream(argv[0]);
-		DataInputStream in = new DataInputStream(fstream);
-		BufferedReader br = new BufferedReader(new InputStreamReader(in));
-		String strLine;
-		while ((strLine = br.readLine()) != null) {
-			ConvertPoflog.convert(strLine);
-		}
-		in.close();
-	}
+public class ConvertPoflog
+{
+  public static void main (String[]argv) throws Exception
+  {
+    FileInputStream fstream = new FileInputStream (argv[0]);
+    DataInputStream in = new DataInputStream (fstream);
+    BufferedReader br = new BufferedReader (new InputStreamReader (in));
+    String strLine;
+    while ((strLine = br.readLine ()) != null)
+      {
+	ConvertPoflog.convert (strLine);
+      }
+    in.close ();
+  }
 
-	public static void convert(String s) {
-		String[] ss = s.split("\t");
-		// for (int i = 0; i < ss.length; i += 1) {
-		// System.out.println(i+": "+ss[i]);
-		// }
-		s = "insert into yubikeys (client_id, active, created, "
-				+ "accessed, tokenId, userId, secret) values (2, true, " + "'"
-				+ ss[0] + "', '" + ss[0] + "', " + "'"
-				+ Crypto.toString(Secret.fromModHex(ss[1]).toBytes()) + "', "
-				+ "'" + Crypto.toString(Secret.fromModHex(ss[2]).toBytes())
-				+ "', " + "'"
-				+ Crypto.toString(Secret.fromModHex(ss[3]).toBytes()) + "');";
-		System.out.println(s);
-	}
+  public static void convert (String s)
+  {
+    String[]ss = s.split ("\t");
+    // for (int i = 0; i < ss.length; i += 1) {
+    // System.out.println(i+": "+ss[i]);
+    // }
+    s = "insert into yubikeys (client_id, active, created, "
+      + "accessed, tokenId, userId, secret) values (2, true, " + "'"
+      + ss[0] + "', '" + ss[0] + "', " + "'"
+      + Crypto.toString (Secret.fromModHex (ss[1]).toBytes ()) + "', "
+      + "'" + Crypto.toString (Secret.fromModHex (ss[2]).toBytes ())
+      + "', " + "'"
+      + Crypto.toString (Secret.fromModHex (ss[3]).toBytes ()) + "');";
+    System.out.println (s);
+  }
 }

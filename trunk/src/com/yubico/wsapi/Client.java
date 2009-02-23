@@ -29,67 +29,78 @@ import org.apache.log4j.Logger;
  * you need only 1 Client in the database, that's your company itself.
  *
  */
-public class Client {
-	static Logger log = Logger.getLogger(Client.class);
+public class Client
+{
+  static Logger log = Logger.getLogger (Client.class);
 
-	private Secret secret;
+  private Secret secret;
 
-	private boolean active;
+  private boolean active;
 
-	private Perms perms;
+  private Perms perms;
 
-	private Date created;
+  private Date created;
 
-	private String email;
+  private String email;
 
-	public Client(Date created, boolean active, String email, Secret secret,
-			Perms perms) {
-		this.created = created;
-		this.active = active;
-		this.email = email;
-		this.secret = secret;
-		this.perms = perms;
-	}
+  public Client (Date created, boolean active, String email, Secret secret,
+		 Perms perms)
+  {
+    this.created = created;
+    this.active = active;
+    this.email = email;
+    this.secret = secret;
+    this.perms = perms;
+  }
 
-	Date getCreated() {
-		return created;
-	}
+  Date getCreated ()
+  {
+    return created;
+  }
 
-	boolean getActive() {
-		return active;
-	}
+  boolean getActive ()
+  {
+    return active;
+  }
 
-	String getEmail() {
-		return email;
-	}
+  String getEmail ()
+  {
+    return email;
+  }
 
-	Secret getSecret() {
-		return secret;
-	}
+  Secret getSecret ()
+  {
+    return secret;
+  }
 
-	Perms getPerms() {
-		return perms;
-	}
+  Perms getPerms ()
+  {
+    return perms;
+  }
 
-	public Secret createSecret(String email) {
-		String ts = "" + new java.util.Date().getTime();
-		return Secret.fromBase64(Crypto.sign(email + ts, secret));
-	}
+  public Secret createSecret (String email)
+  {
+    String ts = "" + new java.util.Date ().getTime ();
+    return Secret.fromBase64 (Crypto.sign (email + ts, secret));
+  }
 
-	static Client lookup(String id) {
-		Database db = Database.getDefault();
-		return db.getClient(id);
-	}
+  static Client lookup (String id)
+  {
+    Database db = Database.getDefault ();
+    return db.getClient (id);
+  }
 
 	/**
 	 * Checks whether the request is allowed by this client.
 	 */
-	public boolean checkPerms(Request request) {
-		return perms.check(request);
-	}
+  public boolean checkPerms (Request request)
+  {
+    return perms.check (request);
+  }
 
-	public String toString() {
-		return "[Client created=" + created + ", email=" + email + ", secret="
-				+ secret + ", perms=" + perms + "]";
-	}
+  public String toString ()
+  {
+    return "[Client created=" + created + ", email=" + email + ", secret="
+      + secret + ", perms=" + perms + "]";
+  }
 }

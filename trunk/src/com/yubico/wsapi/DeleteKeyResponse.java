@@ -21,28 +21,34 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-public class DeleteKeyResponse extends Response {
-	static Logger log = Logger.getLogger(DeleteKeyResponse.class);
+public class DeleteKeyResponse extends Response
+{
+  static Logger log = Logger.getLogger (DeleteKeyResponse.class);
 
-	DeleteKeyResponse(Map map) {
-		super(map);
-	}
+    DeleteKeyResponse (Map map)
+  {
+    super (map);
+  }
 
-	static DeleteKeyResponse create(Map map) {
-		return create(null, map);
-	}
+  static DeleteKeyResponse create (Map map)
+  {
+    return create (null, map);
+  }
 
-	static DeleteKeyResponse create(Client signer, Map map) {
-		DeleteKeyResponse r = new DeleteKeyResponse(map);
-		if (signer != null) {
-			String ts = DateUtils.getTimeStamp();
-			r.putTimestamp(ts);
-			r.sign(signer.getSecret());
-		}
-		return r;
-	}
+  static DeleteKeyResponse create (Client signer, Map map)
+  {
+    DeleteKeyResponse r = new DeleteKeyResponse (map);
+    if (signer != null)
+      {
+	String ts = DateUtils.getTimeStamp ();
+	r.putTimestamp (ts);
+	r.sign (signer.getSecret ());
+      }
+    return r;
+  }
 
-	public String toString() {
-		return "[DeleteKeyResponse " + super.toString() + "]";
-	}
+  public String toString ()
+  {
+    return "[DeleteKeyResponse " + super.toString () + "]";
+  }
 }

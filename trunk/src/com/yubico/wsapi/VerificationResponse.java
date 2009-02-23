@@ -25,35 +25,42 @@ import org.apache.log4j.Logger;
 /**
  * A response to an OTP verification request
  */
-public class VerificationResponse extends Response {
-	static Logger log = Logger.getLogger(VerificationResponse.class);
+public class VerificationResponse extends Response
+{
+  static Logger log = Logger.getLogger (VerificationResponse.class);
 
-	VerificationResponse(Map map) {
-		super(map);
-	}
+    VerificationResponse (Map map)
+  {
+    super (map);
+  }
 
-	static VerificationResponse create(Client signer, String status) {
-		Map map = new HashMap();
-		map.put(Constants.STATUS, status);
-		return createResponse(signer, map);
-	}
+  static VerificationResponse create (Client signer, String status)
+  {
+    Map map = new HashMap ();
+    map.put (Constants.STATUS, status);
+    return createResponse (signer, map);
+  }
 
-	private static VerificationResponse createResponse(Client signer, Map map) {
-		VerificationResponse vr = new VerificationResponse(map);
-		log.debug("client signer=" + signer);
-		if (signer != null) {
-			String ts = DateUtils.getTimeStamp();
-			vr.putTimestamp(ts);
-			vr.sign(signer.getSecret());
-		}
-		return vr;
-	}
+  private static VerificationResponse createResponse (Client signer, Map map)
+  {
+    VerificationResponse vr = new VerificationResponse (map);
+    log.debug ("client signer=" + signer);
+    if (signer != null)
+      {
+	String ts = DateUtils.getTimeStamp ();
+	vr.putTimestamp (ts);
+	vr.sign (signer.getSecret ());
+      }
+    return vr;
+  }
 
-	public boolean isOk() {
-		return Constants.OK.equals(getStatus());
-	}
+  public boolean isOk ()
+  {
+    return Constants.OK.equals (getStatus ());
+  }
 
-	public String toString() {
-		return "[VerificationResponse " + super.toString() + "]";
-	}
+  public String toString ()
+  {
+    return "[VerificationResponse " + super.toString () + "]";
+  }
 }

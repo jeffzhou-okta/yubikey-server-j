@@ -30,44 +30,54 @@ import org.apache.log4j.Logger;
  *  
  * @see Class AddKeyRequest
  */
-public class AddKeyResponse extends Response {
-	static Logger log = Logger.getLogger(AddKeyResponse.class);
+public class AddKeyResponse extends Response
+{
+  static Logger log = Logger.getLogger (AddKeyResponse.class);
 
-	AddKeyResponse(Map map) {
-		super(map);
-	}
+    AddKeyResponse (Map map)
+  {
+    super (map);
+  }
 
-	public String getNonce() {
-		return (String) map.get(Constants.NONCE);
-	}
+  public String getNonce ()
+  {
+    return (String) map.get (Constants.NONCE);
+  }
 
-	public String getTokenId() {
-		return (String) map.get(Constants.TOKEN_ID);
-	}
+  public String getTokenId ()
+  {
+    return (String) map.get (Constants.TOKEN_ID);
+  }
 
-	public String getUserId() {
-		return (String) map.get(Constants.USER_ID);
-	}
+  public String getUserId ()
+  {
+    return (String) map.get (Constants.USER_ID);
+  }
 
-	public String getSharedSecret() {
-		return (String) map.get(Constants.SHARED_SECRET);
-	}
+  public String getSharedSecret ()
+  {
+    return (String) map.get (Constants.SHARED_SECRET);
+  }
 
-	static AddKeyResponse create(Map map) {
-		return create(null, map);
-	}
+  static AddKeyResponse create (Map map)
+  {
+    return create (null, map);
+  }
 
-	static AddKeyResponse create(Client signer, Map map) {
-		AddKeyResponse r = new AddKeyResponse(map);
-		if (signer != null) {
-			String ts = DateUtils.getTimeStamp();
-			r.putTimestamp(ts);
-			r.sign(signer.getSecret());
-		}
-		return r;
-	}
+  static AddKeyResponse create (Client signer, Map map)
+  {
+    AddKeyResponse r = new AddKeyResponse (map);
+    if (signer != null)
+      {
+	String ts = DateUtils.getTimeStamp ();
+	r.putTimestamp (ts);
+	r.sign (signer.getSecret ());
+      }
+    return r;
+  }
 
-	public String toString() {
-		return "[AddKeyResponse " + super.toString() + "]";
-	}
+  public String toString ()
+  {
+    return "[AddKeyResponse " + super.toString () + "]";
+  }
 }

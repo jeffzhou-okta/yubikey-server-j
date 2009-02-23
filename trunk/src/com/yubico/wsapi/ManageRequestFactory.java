@@ -20,40 +20,50 @@ package com.yubico.wsapi;
 import java.util.Map;
 import org.apache.log4j.Logger;
 
-public class ManageRequestFactory extends RequestFactory {
-	private final static Logger log = Logger
-			.getLogger(ManageRequestFactory.class);
+public class ManageRequestFactory extends RequestFactory
+{
+  private final static Logger log =
+    Logger.getLogger (ManageRequestFactory.class);
 
-	public static ManageRequestFactory getDefault() {
-		return new ManageRequestFactory();
-	}
+  public static ManageRequestFactory getDefault ()
+  {
+    return new ManageRequestFactory ();
+  }
 
-	public Request generate(Map normalizedMap) throws InvalidMessageException {
-		log.debug("generate() normalizedMap=" + normalizedMap);
-		String op = (String) normalizedMap.get(Constants.OPERATION);
-		if (Constants.ADD_CLIENT.equals(op)) {
-			return new AddClientRequest(normalizedMap);
-		} else if (Constants.ADD_KEY.equals(op)) {
-			return new AddKeyRequest(normalizedMap);
-		} else if (Constants.DELETE_KEY.equals(op)) {
-			return new DeleteKeyRequest(normalizedMap);
-		} else {
-			if (op == null)
-				op = "<none>";
-			throw new InvalidMessageException(Constants.E_NO_SUCH_OPERATION, op);
-		}
-		/*
-		 * } else if (DELETE_CLIENT.equals(op)){ return new
-		 * DeleteClientRequest.(normalizedMap); } else if (ADD_KEY.equals(op)){
-		 * return new AddKeyRequest.(normalizedMap); } else if
-		 * (DELETE_KEY.equals(op)){ return new DeleteKeyRequest.(normalizedMap); }
-		 * else { return new ErrorRequest(normalizedMap, E_NO_SUCH_OPERATION); }
-		 */
-	}
+  public Request generate (Map normalizedMap) throws InvalidMessageException
+  {
+    log.debug ("generate() normalizedMap=" + normalizedMap);
+    String op = (String) normalizedMap.get (Constants.OPERATION);
+    if (Constants.ADD_CLIENT.equals (op))
+      {
+	return new AddClientRequest (normalizedMap);
+      }
+    else if (Constants.ADD_KEY.equals (op))
+      {
+	return new AddKeyRequest (normalizedMap);
+      }
+    else if (Constants.DELETE_KEY.equals (op))
+      {
+	return new DeleteKeyRequest (normalizedMap);
+      }
+    else
+      {
+	if (op == null)
+	  op = "<none>";
+	throw new InvalidMessageException (Constants.E_NO_SUCH_OPERATION, op);
+      }
+    /*
+     * } else if (DELETE_CLIENT.equals(op)){ return new
+     * DeleteClientRequest.(normalizedMap); } else if (ADD_KEY.equals(op)){
+     * return new AddKeyRequest.(normalizedMap); } else if
+     * (DELETE_KEY.equals(op)){ return new DeleteKeyRequest.(normalizedMap); }
+     * else { return new ErrorRequest(normalizedMap, E_NO_SUCH_OPERATION); }
+     */
+  }
 
-	// public void setup(String password)
-	// {
-	// this.password = password;
-	// }
+  // public void setup(String password)
+  // {
+  // this.password = password;
+  // }
 
 }

@@ -21,33 +21,36 @@ import java.util.Map;
 
 public class ManageResponseFactory extends ResponseFactory
 {
-    public static ManageResponseFactory getDefault()
-    {
-	return new ManageResponseFactory();
-    }
+  public static ManageResponseFactory getDefault ()
+  {
+    return new ManageResponseFactory ();
+  }
 
-    Response generate(Map normalizedMap) throws Exception
-    {
-	String op = (String) normalizedMap.get(Constants.OPERATION);
-	if (Constants.ADD_CLIENT.equals(op)){
-	    return new AddClientResponse(normalizedMap);
-	} 
-	else if (Constants.ADD_KEY.equals(op)){
-	    return new AddKeyResponse(normalizedMap);
-	} 
-	else if (Constants.DELETE_KEY.equals(op)){
-	    return new DeleteKeyResponse(normalizedMap);
-	} 
-	else {
-	    throw new RuntimeException(op+" is nyi in "+normalizedMap);
-	    //return new ErrorResponse(normalizedMap);
-	}
-    }
+  Response generate (Map normalizedMap) throws Exception
+  {
+    String op = (String) normalizedMap.get (Constants.OPERATION);
+    if (Constants.ADD_CLIENT.equals (op))
+      {
+	return new AddClientResponse (normalizedMap);
+      }
+    else if (Constants.ADD_KEY.equals (op))
+      {
+	return new AddKeyResponse (normalizedMap);
+      }
+    else if (Constants.DELETE_KEY.equals (op))
+      {
+	return new DeleteKeyResponse (normalizedMap);
+      }
+    else
+      {
+	throw new RuntimeException (op + " is nyi in " + normalizedMap);
+	//return new ErrorResponse(normalizedMap);
+      }
+  }
 
 //     public void setup(String password)
 //     {
-//  	this.password = password;
+//      this.password = password;
 //     }
 
 }
-

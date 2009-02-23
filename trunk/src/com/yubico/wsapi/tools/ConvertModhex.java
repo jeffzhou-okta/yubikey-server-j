@@ -23,21 +23,26 @@ import com.yubico.wsapi.Crypto;
 /** 
  * Eg. java -cp ./out/wsapi.jar;./resources/yubico-base-1.1.jar;./resources/tsik.jar;./resources/log4j-1.2.13.jar com.yubico.wsapi.tools.ConvertModhex bnhtdkvrbfnbvrrurtvvrickdfvbuldtkububicktvuk
  */
-public class ConvertModhex {
-	public static void main(String[] argv) throws Exception {
-		Secret s = Secret.fromModHex(argv[0]);
-		System.out.println("Hex: " + toString(s.toBytes()));
-		System.out.println("Base64: " + Crypto.toString(s.toBytes()));
-	}
+public class ConvertModhex
+{
+  public static void main (String[]argv) throws Exception
+  {
+    Secret s = Secret.fromModHex (argv[0]);
+      System.out.println ("Hex: " + toString (s.toBytes ()));
+      System.out.println ("Base64: " + Crypto.toString (s.toBytes ()));
+  }
 
-	static String toString(byte[] b) {
-		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < b.length; i += 1) {
-			if (i > 0) {
-				sb.append(",");
-			}
-			sb.append(Integer.toHexString(b[i] & 0xFF));
-		}
-		return sb.toString();
-	}
+  static String toString (byte[]b)
+  {
+    StringBuffer sb = new StringBuffer ();
+    for (int i = 0; i < b.length; i += 1)
+      {
+	if (i > 0)
+	  {
+	    sb.append (",");
+	  }
+	sb.append (Integer.toHexString (b[i] & 0xFF));
+      }
+    return sb.toString ();
+  }
 }

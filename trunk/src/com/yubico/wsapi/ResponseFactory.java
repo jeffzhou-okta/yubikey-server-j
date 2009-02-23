@@ -11,9 +11,11 @@ import org.apache.log4j.Logger;
 
 abstract public class ResponseFactory
 {
-    private final static Logger log = Logger.getLogger(ResponseFactory.class);
+  private final static Logger log = Logger.getLogger (ResponseFactory.class);
 
-    ResponseFactory(){}
+    ResponseFactory ()
+  {
+  }
 
     /**
      * Creates a response from a map.
@@ -21,19 +23,21 @@ abstract public class ResponseFactory
      * @param map the map to parse.
      * @return a suitable request from the input data.
      */
-    public Response createFrom(Map map) 
+  public Response createFrom (Map map)
+  {
+    Map tmp = new HashMap ();
+    tmp.putAll (map);
+    tmp = FactoryUtil.normalize (tmp);
+    try
     {
-	Map tmp = new HashMap();
-	tmp.putAll(map);
-	tmp = FactoryUtil.normalize(tmp);
-	try {
-	    return generate(tmp);
-	} catch (Exception e) {
-	    log.info(e);
-	    return new ErrorResponse(tmp);
-	}
+      return generate (tmp);
     }
+    catch (Exception e)
+    {
+      log.info (e);
+      return new ErrorResponse (tmp);
+    }
+  }
 
-    abstract Response generate(Map normalizedMap) throws Exception;
+  abstract Response generate (Map normalizedMap) throws Exception;
 }
-

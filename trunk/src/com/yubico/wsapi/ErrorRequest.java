@@ -19,29 +19,34 @@ package com.yubico.wsapi;
 
 import java.util.HashMap;
 
-public class ErrorRequest extends Request {
-	// private final static Logger log = Logger.getLogger(ErrorRequest.class);
-	private String reason;
+public class ErrorRequest extends Request
+{
+  // private final static Logger log = Logger.getLogger(ErrorRequest.class);
+  private String reason;
 
-	private String info;
+  private String info;
 
-	ErrorRequest(String reason, String info) throws InvalidMessageException {
-		super(new HashMap());
-		this.reason = reason;
-		this.info = info;
-	}
+    ErrorRequest (String reason, String info) throws InvalidMessageException
+  {
+    super (new HashMap ());
+    this.reason = reason;
+    this.info = info;
+  }
 
-	public void checkIsValid() throws InvalidMessageException {
-	}
+  public void checkIsValid () throws InvalidMessageException
+  {
+  }
 
-	public Response process() {
-		ErrorResponse r = new ErrorResponse(new HashMap());
-		r.putStatus(reason);
-		r.putExtraInfo(info);
-		return r;
-	}
+  public Response process ()
+  {
+    ErrorResponse r = new ErrorResponse (new HashMap ());
+      r.putStatus (reason);
+      r.putExtraInfo (info);
+      return r;
+  }
 
-	public String toString() {
-		return "[ErrorRequest " + super.toString() + "]";
-	}
+  public String toString ()
+  {
+    return "[ErrorRequest " + super.toString () + "]";
+  }
 }

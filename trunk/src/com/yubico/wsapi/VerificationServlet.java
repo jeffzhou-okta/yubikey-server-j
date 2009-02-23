@@ -33,12 +33,15 @@ import javax.servlet.http.HttpServletResponse;
  * The servlet that handles an incoming verification request, mapped from
  * web.xml
  */
-public class VerificationServlet extends WsApiServlet {
-	private static final long serialVersionUID = 2873488797623L;
+public class VerificationServlet extends WsApiServlet
+{
+  private static final long serialVersionUID = 2873488797623L;
 
-	public void doQuery(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		Map map = req.getParameterMap();
-		print(resp, VerifyRequestFactory.getDefault().createFrom(map).process());
-	}
+  public void doQuery (HttpServletRequest req, HttpServletResponse resp)
+    throws ServletException, IOException
+  {
+    Map map = req.getParameterMap ();
+      print (resp,
+	     VerifyRequestFactory.getDefault ().createFrom (map).process ());
+  }
 }
