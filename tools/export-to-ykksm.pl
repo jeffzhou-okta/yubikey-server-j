@@ -36,7 +36,7 @@ sub usage {
     print "Usage: $0 [--verbose] [--help]\n";
     print "          [--database DBI] [--db-user USER] [--db-passwd PASSWD]\n";
     print "\n";
-    print "  Tool to export keys from Java server to the YKKMS format.\n";
+    print "  Tool to export keys from Java server to the YKKSM-KEYPROV format.\n";
     print "\n";
     print "  DBI: Database identifier, see http://dbi.perl.org/\n";
     print "       defaults to a MySQL database ykksm on localhost,\n";
