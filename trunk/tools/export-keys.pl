@@ -112,8 +112,8 @@ while ($row = $sth->fetchrow_hashref()) {
     print b642hex($row->{'userId'}) . ",";
     print b642hex($row->{'secret'}) . ",";
     print "000000000000,";
-    print "created=" . $row->{'created'} . ",";
-    print "accessed=" . $row->{'accessed'} . "\n";
+    print $row->{'created'} . ",";
+    print $row->{'accessed'} . ",0\n";
 }
 
 if ($sth->rows == 0) {
