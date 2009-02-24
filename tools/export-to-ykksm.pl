@@ -80,13 +80,13 @@ if ($#ARGV>=0) {
 sub b642hex {
     my $b64 = shift;
     my $bin = decode_base64($b64);
-    return unpack("h*", $bin);
+    return unpack("H*", $bin);
 }
 
 sub b64ToModhex {
     my $b64 = shift;
     my $bin = decode_base64($b64);
-    $_ = unpack("h*", $bin);
+    $_ = unpack("H*", $bin);
     tr/0123456789abcdef/cbdefghijklnrtuv/;
     return $_;
 }
