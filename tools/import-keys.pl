@@ -54,6 +54,20 @@ sub usage {
     exit 1;
 }
 
+sub hex2b64 {
+    my $hex = shift;
+    my $bin = pack("H*", $hex);
+    $_ = encode_base64($bin);
+    chop;
+    return $_;
+}
+
+sub modhex2b64 {
+    $_ = shift;
+    tr/cbdefghijklnrtuv/0123456789abcdef/;
+    return hex2b64($_);
+}
+
 my $verbose = 0;
 my $db = "dbi:mysql:yubico";
 my $dbuser;
@@ -112,23 +126,9 @@ my $dbh = DBI->connect($db, $dbuser, $dbpasswd, {'RaiseError' => 1});
 my $inserth = $dbh->prepare_cached(qq{
 INSERT INTO yubikeys (client_id, active, created, accessed,
                       tokenId, userId, secret)
-VALUES (1, true, ?, null, ?, ?, ?)
+VALUES (1, true, ?, ?, ?, ?, ?)
 });
 my $now = strftime "%Y-%m-%dT%H:%M:%S", localtime;
-
-sub hex2b64 {
-    my $hex = shift;
-    my $bin = pack("H*", $hex);
-    $_ = encode_base64($bin);
-    chop;
-    return $_;
-}
-
-sub modhex2b64 {
-    $_ = shift;
-    tr/cbdefghijklnrtuv/0123456789abcdef/;
-    return hex2b64($_);
-}
 
 open(GPGV, "gpg < $infilename 2>/dev/null |")
     or die "Cannot launch gpg";
@@ -150,6 +150,7 @@ while (<GPGV>) {
     }
 
     $created = $now if !$created;
+    $accessed = $now if !$accessed;
 
     print "tokenId $publicName userId $internalName secret $aesKey\n";
 
@@ -159,7 +160,7 @@ while (<GPGV>) {
 
     print "tokenId $publicName userId $internalName secret $aesKey\n";
 
-    $inserth->execute($created, $publicName, $internalName, $aesKey)
+    $inserth->execute($created, $accessed, $publicName, $internalName, $aesKey)
 	or die "Database insert error: " . $dbh->errstr;
 }
 print "\n";
