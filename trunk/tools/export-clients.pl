@@ -92,6 +92,12 @@ while ($row = $sth->fetchrow_hashref()) {
 	}
 	print "\n";
     }
+    $row->{'id'} =~ s:[\t\r\n]: :gs;
+    $row->{'active'} =~ s:[\t\r\n]: :gs;
+    $row->{'created'} =~ s:[\t\r\n]: :gs;
+    $row->{'secret'} =~ s:[\t\r\n]: :gs;
+    $row->{'email'} =~ s:[\t\r\n]: :gs;
+    $row->{'notes'} =~ s:[\t\r\n]: :gs;
     printf ("%s\t%s\t%s\t%s\t%s\t%s\n",
 	    $row->{'id'},
 	    $row->{'active'},
